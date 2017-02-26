@@ -1,0 +1,44 @@
+#++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+# Script File: MineScholarData.R  
+# Date of creation: 13 Feb 2017
+# Date of last modification: 25 Feb 2017
+# Author: Seraya Maouche <seraya.maouche@iscb.org>
+# Short Description: This script provides functionalities to mine scientific publication
+#                     from multiple sources
+#++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+# Installing depending packages
+requiredPackages <- c("httpuv","htmltools","sourcetools","solr",
+                       "bibtex","shiny","miniUI","rappdirs",
+                       "rplos","aRxiv","rentrez","rredis")
+install.packages(requiredPackages)
+
+
+#********************** Installing scholar from CRAN
+# install.packages("scholar")
+#
+#********************** Installing development version from GitHub
+#if (!require("devtools")) install.packages("devtools")
+# devtools::install_github("ropensci/scholar")
+
+
+#********************** Load library
+library(scholar)
+library(ggplot2)
+
+# Source should be on of “plos”, “bmc”, “crossref”,
+#                         “entrez”, “arxiv”, “biorxiv”, 
+#                         “europmc”
+allSources <- c("plos","bmc","crossref","entrez", 
+                "arxiv","biorxiv","europmc")
+source <- "europmc"
+# Search for the term "Big Data" in Nature journal
+# ft_search() Search for articles across many publishers and repositories.
+resECardio <- ft_search(query = 'Big Data',limit=100, from = source)
+
+resECardio$europmc
+
+# Search for information on journals or publishers
+ft_providers(journal="Lancet")
+ft_providers(publisher="nature")
+ft_providers(publisher="plos genetics")
